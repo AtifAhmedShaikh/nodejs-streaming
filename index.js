@@ -2,6 +2,7 @@ import express from "express";
 import statusMonitor from "express-status-monitor";
 import fs from "node:fs";
 import zlip from "node:zlib";
+import os from "node:os";
 
 const app = express();
 
@@ -36,6 +37,13 @@ app.get("/zip-stream", (req, res) => {
   res.send("Good");
 });
 
+app.get("/server-id", (req, res) => {
+  const length = os.availableParallelism();
+  const cpuLength = os.cpus().length;
+
+  res.json({ message: `Hi I am from ${process.pid} length ${length} cpu ${cpuLength}` });
+});
+
 app.listen(5000, () => {
-  console.log("Server running at port");
+  console.log("Server running at port");    
 });
